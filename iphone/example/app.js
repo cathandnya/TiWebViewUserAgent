@@ -5,19 +5,35 @@
 
 
 // open a single window
-var window = Ti.UI.createWindow({
+var win = Ti.UI.createWindow({
 	backgroundColor:'white'
 });
+var label = Ti.UI.createLabel();
+win.add(label);
+win.open();
 
 // TODO: write your module tests here
-var tiwebviewuseragentios = require('tv.harukaze.ti.webviewuseragent.ios');
-Ti.API.info("module is => " + tiwebviewuseragentios);
-tiwebviewuseragentios.setWebViewUserAgent('your own user agent string');
+var iphone = require('tv.harukaze.ti.webview.useragent.ios');
+Ti.API.info("module is => " + iphone);
 
-var webview = Ti.UI.createWebView({
-	width:'auto',height:'auto',
-	url:'http://env.harukaze.tv/'
-});
+label.text = iphone.example();
 
-window.add(webview);
-window.open()
+Ti.API.info("module exampleProp is => " + iphone.exampleProp);
+iphone.exampleProp = "This is a test value";
+
+if (Ti.Platform.name == "android") {
+	var proxy = iphone.createExample({
+		message: "Creating an example Proxy",
+		backgroundColor: "red",
+		width: 100,
+		height: 100,
+		top: 100,
+		left: 150
+	});
+
+	proxy.printMessage("Hello world!");
+	proxy.message = "Hi world!.  It's me again.";
+	proxy.printMessage("Hello world!");
+	win.add(proxy);
+}
+
